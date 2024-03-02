@@ -1,0 +1,46 @@
+    coordinates = {
+        'A': (0, 0),
+        'B': (2, 1),
+        'C': (1, 2),
+        'D': (4, 1),
+        'E': (3, 3),
+        'F': (5, 2)
+    }
+    x1, y1 = coordinates[node]
+    x2, y2 = coordinates[goal]
+    return ((x2 - x1) ** 2 + (y2 - y1) ** 2) ** 0.5
+
+# Best-First Search Algorithm
+def best_first_search(graph, start, goal):
+    frontier = [(0, start)]  # Priority queue (cost, node)
+    explored = set()
+
+    while frontier:
+        cost, current_node = heapq.heappop(frontier)
+        if current_node == goal:
+            return cost  # Return the cost to reach the goal
+        explored.add(current_node)
+        for neighbor, neighbor_cost in graph[current_node].items():
+            if neighbor not in explored:
+                heapq.heappush(frontier, (neighbor_cost, neighbor))
+
+# A* Algorithm
+def a_star_search(graph, start, goal):
+    frontier = [(0 + heuristic(start, goal), 0, start)]  # Priority queue (f_cost, g_cost, node)
+    explored = set()
+
+    while frontier:
+        _, g_cost, current_node = heapq.heappop(frontier)
+        if current_node == goal:
+            return g_cost  # Return the cost to reach the goal
+        explored.add(current_node)
+        for neighbor, neighbor_cost in graph[current_node].items():
+            if neighbor not in explored:
+                heapq.heappush(frontier, (g_cost + neighbor_cost + heuristic(neighbor, goal), g_cost + neighbor_cost, neighbor))
+
+# Example usage
+start_node = 'A'
+goal_node = 'F'
+
+print("Best-First Search Cost:", best_first_search(graph, start_node, goal_node))
+print("A* Search Cost:", a_star_search(graph, start_node, goal_node))
