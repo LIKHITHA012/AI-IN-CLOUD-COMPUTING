@@ -1,0 +1,54 @@
+#include <stdio.h>
+#include <string.h>
+
+#define MAX_APPOINTMENTS 100
+#define MAX_TERM_LENGTH 50
+
+// Structure to represent an appointment
+typedef struct {
+    char date[MAX_TERM_LENGTH];
+    char time[MAX_TERM_LENGTH];
+    char purpose[MAX_TERM_LENGTH];
+} Appointment;
+
+// Function to unify two terms
+int unify(char x[MAX_TERM_LENGTH], char y[MAX_TERM_LENGTH], char substitution[MAX_TERM_LENGTH]) {
+    if (strcmp(x, y) == 0) {
+        strcpy(substitution, y);
+        return 1; // Terms are identical
+    } else {
+        return 0; // Unification failed
+    }
+}
+
+// Function to resolve a query against the appointment schedule
+void resolve_query(char attribute[MAX_TERM_LENGTH], char value[MAX_TERM_LENGTH], Appointment schedule[MAX_APPOINTMENTS], int num_appointments) {
+    for (int i = 0; i < num_appointments; i++) {
+        if (strcmp(attribute, "date") == 0 && strcmp(schedule[i].date, value) == 0) {
+            printf("Match found: Date: %s, Time: %s, Purpose: %s\n", schedule[i].date, schedule[i].time, schedule[i].purpose);
+        } else if (strcmp(attribute, "time") == 0 && strcmp(schedule[i].time, value) == 0) {
+            printf("Match found: Date: %s, Time: %s, Purpose: %s\n", schedule[i].date, schedule[i].time, schedule[i].purpose);
+        } else if (strcmp(attribute, "purpose") == 0 && strcmp(schedule[i].purpose, value) == 0) {
+            printf("Match found: Date: %s, Time: %s, Purpose: %s\n", schedule[i].date, schedule[i].time, schedule[i].purpose);
+        }
+    }
+}
+
+int main() {
+    // Example appointment schedule
+    Appointment schedule[MAX_APPOINTMENTS] = {
+        {"2024-03-27", "10:00", "Meeting with Client A"},
+        {"2024-03-27", "14:00", "Team Briefing"},
+        {"2024-03-28", "09:30", "Interview Candidate B"}
+    };
+    int num_appointments = 3;
+
+    // Example query
+    char attribute[MAX_TERM_LENGTH] = "date";
+    char value[MAX_TERM_LENGTH] = "2024-03-27";
+
+    // Resolve the query against the appointment schedule
+    resolve_query(attribute, value, schedule, num_appointments);
+
+    return 0;
+}
