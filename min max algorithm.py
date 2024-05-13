@@ -1,3 +1,4 @@
+#ADVERSARIAL SEARCH
 def minimax (curDepth, nodeIndex,
 maxTurn, scores,
 targetDepth):
