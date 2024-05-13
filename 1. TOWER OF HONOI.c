@@ -1,3 +1,4 @@
+//A toy problem is a small, manageable task that can be solved using AI techniques.
 #include<stdio.h>
 
 void TOH(int n,int A,int B,int C){
